@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for visshaa#2</title>
+    <style>
+        :root {
+            --bg-deep: #0a192f;
+            --ocean-blue: #0077b6;
+            --sea-foam: #90e0ef;
+            --text-dark: #03045e;
+            --card-bg: rgba(255, 255, 255, 0.96);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0a192f 0%, #001220 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Bubble Animation */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: rise 10s infinite ease-in;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-110vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 119, 182, 0.25);
+            border: 3px solid var(--sea-foam);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box;
+            color: var(--text-dark);
+        }
+
+        h1 {
+            color: #03045e;
+            font-size: 24px;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+
+        p {
+            color: #4a5759;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+            height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 15px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--ocean-blue);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 119, 182, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #03045e;
+        }
+
+        .btn-primary:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #noBtn {
+            background-color: #f1faee;
+            color: #e63946;
+            border: 2px solid #e63946;
+            z-index: 20;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .options-group {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .options-group label {
+            display: block;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--sea-foam);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-dark);
+            outline: none;
+            background-color: #f0faff;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .deco-animation {
+            font-size: 44px;
+            margin-bottom: 8px;
+            animation: swim 4s ease-in-out infinite;
+        }
+
+        @keyframes swim {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-6px) rotate(4deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .rules-list {
+            text-align: left;
+            margin: 15px 0;
+            background: #f0faff;
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--sea-foam);
+        }
+
+        .rule-item {
+            margin-bottom: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #4a5759;
+        }
+
+        .rule-item strong {
+            color: var(--ocean-blue);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .penalty-text {
+            font-size: 12px;
+            color: #e63946;
+            line-height: 1.4;
+            margin-top: 15px;
+            text-align: left;
+            background: #ffeef0;
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #e63946;
+        }
+
+        .ticket-design {
+            border: 3px dashed var(--ocean-blue);
+            padding: 20px;
+            border-radius: 16px;
+            background: #f0faff;
+            margin-top: 15px;
+        }
+
+        .ticket-title {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .ticket-sub {
+            font-size: 12px;
+            color: #666;
+            border-top: 1px dashed var(--sea-foam);
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bgm" loop>
+        <source src="wave to earth - seasons.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <form id="dateForm" action="https://formsubmit.co/sahasikaa16@gmail.com" method="POST" style="display:contents;">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" id="hiddenDate" name="Tanggal_Free">
+
+        <!-- GATE PAGE (VERIFIKASI VISHA) -->
+        <div id="gatePage" class="card">
+            <div class="deco-animation">🔒🍓🌊</div>
+            <h1>Level 1 Cleared 🌊</h1>
+            <p>Wait, before we start... let's make sure you are the right person. This page is strictly customized for
+                Visha😉</p>
+            <p style="font-size: 13px; color: #666; margin-top: 10px;">Enter the passcode from the letter to unlock the
+                next page.</p>
+            <div class="options-group" style="text-align: center; margin-top: 15px;">
+                <input type="password" id="passcodeInput" placeholder="Enter passcode..." autocomplete="off">
+            </div>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="checkGatePasscode()">Unlock Undangan
+                🔓</button>
+        </div>
+
+        <!-- PAGE 1: THE INVITATION -->
+        <div id="page1" class="card hidden">
+            <div class="deco-animation">🎉🐬🍓</div>
+            <h1>LEVEL 2: UNLOCKED 🐟</h1>
+            <p>I had a great time on our first date. So, ready for Round 2?</p>
+            <div class="btn-container">
+                <button type="button" id="yesBtn" class="btn-primary" onclick="triggerYesEffects()" disabled>Yes, let's
+                    go! 🐟</button>
+                <button type="button" id="noBtn" onmouseover="handleNoInteraction()"
+                    onclick="handleNoInteraction()">No</button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: WHEN ARE YOU FREE -->
+        <div id="page2" class="card hidden">
+            <div class="deco-animation">📅🐳✨</div>
+            <h1>When are you free?</h1>
+            <p>Let's match our schedules!</p>
+            <div class="options-group">
+                <select id="dateSelect" name="Pilihan_Tanggal">
+                    <option value="" disabled selected>-- Select a Date --</option>
+                    <option value="Sabtu, 18 Juli">Sabtu, 18 Juli 2026</option>
+                    <option value="Minggu, 19 Juli">Minggu, 19 Juli 2026</option>
+                    <option value="Sabtu, 25 Juli">Sabtu, 25 Juli 2026 (Notes: we need further discussion)</option>
+                    <option value="Minggu, 26 Juli">Minggu, 26 Juli 2026 (Notes: we need further discussion)</option>
+                </select>
+            </div>
+            <br>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="nextPage(3)">Next Steps →</button>
+        </div>
+
+        <!-- PAGE 3: WHERE TO GO -->
+        <div id="page3" class="card hidden">
+            <div class="deco-animation">🗺️🐙🐟</div>
+            <h1>Where to go?</h1>
+            <p>Pick your vibe!</p>
+            <div class="options-group">
+                <select id="placeSelect" name="Tempat_Date" onchange="toggleOthers('placeSelect', 'placeOthers')">
+                    <option value="Jakarta Aquarium">Jakarta Aquarium</option>
+                    <option value="Sea World Ancol">Sea World Ancol</option>
+                    <option value="BX Sea Bintaro">BX Sea Bintaro</option>
+                    <option value="Ocean Dream Samudra">Ocean Dream Samudra</option>
+                    <option value="Bounce Street Asia">Bounce Street Asia</option>
+                    <option value="Others">Others</option>
+                </select>
+                <input type="text" id="placeOthers" name="Tempat_Lainnya" class="hidden"
+                    placeholder="Where do you wanna go?">
+            </div>
+            <br>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="nextPage(4)">Next Steps →</button>
+        </div>
+
+        <!-- PAGE 4: FOOD PREFERENCE -->
+        <div id="page4" class="card hidden">
+            <div class="deco-animation">🍜🍤😋</div>
+            <h1>What's on the menu?</h1>
+            <p>Need to charge up for our date!</p>
+            <div class="options-group">
+                <select id="foodSelect" name="Menu_Makanan" onchange="toggleOthers('foodSelect', 'foodOthers')">
+                    <option value="This time, you decide">This time, you decide</option>
+                    <option value="Others">Others</option>
+                </select>
+                <input type="text" id="foodOthers" name="Makanan_Lainnya" class="hidden"
+                    placeholder="What are we eating?">
+            </div>
+            <br>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="nextPage(5)">Next Steps →</button>
+        </div>
+
+        <!-- PAGE 5: DRESS CODE -->
+        <div id="page5" class="card hidden">
+            <div class="deco-animation">👕👗✨</div>
+            <h1>What should we wear?</h1>
+            <p>Matching is cute, but comfort is key!</p>
+            <div class="options-group">
+                <select id="dressSelect" name="Dress_Code">
+                    <option value="ngikann">ngikann</option>
+                    <option value="blue (wowo)">blue (wowo)</option>
+                    <option value="red">red</option>
+                    <option value="white">white</option>
+                    <option value="black">black</option>
+                    <option value="Wear whatever you want, you d look stunning anyway">Wear whatever you want, you d
+                        look stunning anyway</option>
+                </select>
+            </div>
+            <br>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="nextPage(6)">Next Steps →</button>
+        </div>
+
+        <!-- PAGE 6: PRE-DATE RULES -->
+        <div id="page6" class="card hidden">
+            <div class="deco-animation">📋🔔❤️</div>
+            <h1>Pre-Date Rules</h1>
+            <p>Gotta agree to these tiny rules starting today until our date! 🤝</p>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <strong>1. The Daily Check-in ☀️🌙</strong>
+                    Say good morning and good night every single day until our date. Simple as that, just to stay in
+                    touch.
+                </div>
+                <div class="rule-item">
+                    <strong>2. The Always Smile Policy 😊</strong>
+                    Whenever things get heavy this week, take a breath and smile. I'll make sure you keep that smile on
+                    our date.
+                </div>
+                <div class="rule-item">
+                    <strong>3. Stay Hydrated & Healthy 🍓</strong>
+                    Take care of yourself and don't skip meals. Need you active for our round 2.
+                </div>
+                <div class="penalty-text">
+                    <strong>By clicking the button below, you officially agree to stick to these rules until D-Day.
+                        Penalty: Sultan will be late 10 minutes for each violation. Choose wisely. ⚖️</strong>
+                </div>
+            </div>
+            <button type="button" class="btn-primary" style="width: 100%;" onclick="nextPage(7)">Target Locked. I'm
+                ready! 🤝</button>
+        </div>
+
+        <!-- PAGE 7: RATING FIRST DATE -->
+        <div id="page7" class="card hidden">
+            <div class="deco-animation">⭐🦈💬</div>
+            <h1>Rate Our First Date!</h1>
+            <p>Quick honest feedback before I print your ticket. Scale 1-10, how fun was our first date? 😏</p>
+            <div class="options-group">
+                <input type="text" id="ratingInput" placeholder="Give me a number (1-10)..." autocomplete="off">
+            </div>
+            <button type="button" class="btn-primary" style="width: 100%;"
+                onclick="validateRatingAndSubmit(event)">Submit Rating & Print 🎟️</button>
+        </div>
+
+        <!-- PAGE 8: DIGITAL TICKET -->
+        <div id="page8" class="card hidden">
+            <div class="deco-animation">🎟️✨🐬</div>
+            <h1>Your Ticket is Ready!</h1>
+            <p>Screenshot this premium pass as our official commitment card! 📸</p>
+            <div class="ticket-design">
+                <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">🌊 AQUARIUM PREMIUM PASS</div>
+                <div id="ticketText" class="ticket-title">Admitted: One Date with Sultan</div>
+                <div id="ticketDetails"
+                    style="font-size: 13px; margin: 10px 0; color: #333; text-align: left; padding-left: 10px;">
+                    <strong>Destination:</strong> [Tempat]<br>
+                    <strong>Dress Code:</strong> [Style]
+                </div>
+                <div class="ticket-sub">Can't wait! Save this or I'll drag u there anyway! 🥰🍓</div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        // Background bubble generator
+        function createBubbles() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 15; i++) {
+                let bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                let size = Math.random() * 30 + 10;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + 'vw';
+                bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                body.appendChild(bubble);
+            }
+        }
+        createBubbles();
+
+        let noClickCount = 0;
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const audio = document.getElementById('bgm');
+
+        // Check Passcode
+        function checkGatePasscode() {
+            const inputVal = document.getElementById('passcodeInput').value.trim();
+            if (inputVal === "☺️☺️😊😊") {
+                document.getElementById('gatePage').classList.add('hidden');
+                document.getElementById('page1').classList.remove('hidden');
+                if (audio && audio.paused) {
+                    audio.play().catch(e => { console.log("Autoplay blocked."); });
+                }
+            } else {
+                alert("Coba liat suratnya lagi dengan pas dan tepat... 🤫🔍");
+                document.getElementById('passcodeInput').value = "";
+            }
+        }
+
+        // Logic "No" button makes "Yes" button active
+        function handleNoInteraction() {
+            if (noClickCount === 0) {
+                yesBtn.disabled = false; // "Yes" button turns on
+            }
+            noClickCount++;
+            if (noClickCount === 2) noBtn.innerText = "Yakin?? 🥺";
+            if (noClickCount === 3) noBtn.innerText = "Reconsider? 💔";
+
+            let currentScale = 1 - (noClickCount * 0.15);
+            let yesScale = 1 + (noClickCount * 0.12);
+
+            if (currentScale <= 0.25) {
+                noBtn.classList.add('hidden');
+            } else {
+                noBtn.style.transform = `scale(${currentScale})`;
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = Math.max(10, x) + 'px';
+                noBtn.style.top = Math.max(10, y) + 'px';
+            }
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        // Confetti effect
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function triggerYesEffects() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    angle: Math.random() * Math.PI * 2,
+                    speed: 4 + Math.random() * 6,
+                    radius: 4 + Math.random() * 4,
+                    color: ['#0077b6', '#90e0ef', '#ffbcca', '#ffffff'][Math.floor(Math.random() * 4)],
+                    opacity: 1
+                });
+            }
+            animateConfetti();
+            setTimeout(() => { nextPage(2); }, 1000);
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, idx) => {
+                p.x += Math.cos(p.angle) * p.speed;
+                p.y += Math.sin(p.angle) * p.speed + 1.2;
+                p.opacity -= 0.015;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.opacity;
+                ctx.fill();
+                if (p.opacity <= 0) particles.splice(idx, 1);
+            });
+            if (particles.length > 0) requestAnimationFrame(animateConfetti);
+        }
+
+        function nextPage(pageNumber) {
+            if (pageNumber === 3 && !document.getElementById('dateSelect').value) {
+                alert("Pilih tanggal kosongmu dulu dong! 🍓🐟");
+                return;
+            }
+            if (pageNumber === 3 || pageNumber === 4) {
+                document.getElementById('hiddenDate').value = document.getElementById('dateSelect').value;
+            }
+            for (let i = 1; i <= 8; i++) {
+                let p = document.getElementById(`page${i}`);
+                if (p) p.classList.add('hidden');
+            }
+            document.getElementById(`page${pageNumber}`).classList.remove('hidden');
+        }
+
+        function toggleOthers(selectId, inputId) {
+            const selectEl = document.getElementById(selectId);
+            const inputEl = document.getElementById(inputId);
+            if (selectEl.value === 'Others') {
+                inputEl.classList.remove('hidden');
+                inputEl.required = true;
+            } else {
+                inputEl.classList.add('hidden');
+                inputEl.required = false;
+            }
+        }
+
+        // Validate Rating & Final Submission
+        function validateRatingAndSubmit(event) {
+            event.preventDefault();
+            const ratingVal = document.getElementById('ratingInput').value.trim();
+            if (!ratingVal) { alert("Isi angkamu dulu dong! 📈"); return; }
+
+            const ratingNum = parseInt(ratingVal, 10);
+            if (isNaN(ratingNum) || ratingNum < 1 || ratingNum > 10) { alert("Masukin angka antara 1-10 ya! 🤨"); return; }
+
+            if (ratingNum <= 7) {
+                alert("Yakin cuma segitu? Coba dipikir-pikir lagi... 😜");
+            } else if (ratingNum === 8 || ratingNum === 9) {
+                alert("Dikit lagi dong! Masa ga kangen sih? Input 10 coba! 🥰");
+            } else if (ratingNum === 10) {
+                alert("Glad you enjoyed it as much as I did. Let's make this next one way betterrrrrrrrr. 😉");
+
+                const selectedDate = document.getElementById('dateSelect').value;
+                const place = document.getElementById('placeSelect').value === 'Others' ? document.getElementById('placeOthers').value : document.getElementById('placeSelect').value;
+                const dress = document.getElementById('dressSelect').value;
+
+                document.getElementById('ticketText').innerText = `Admitted: One Date with Sultan - Valid for ${selectedDate}`;
+                document.getElementById('ticketDetails').innerHTML = `<strong>Destination:</strong> ${place}<br><strong>Dress Code:</strong> ${dress}`;
+
+                // Process FormSubmit in background
+                const form = document.getElementById('dateForm');
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                alert("Jawaban kamu sudah kekirim ke email aku ya! See ya! 🥰🍓🐟");
+                nextPage(8);
+            }
+        }
+    </script>
+</body>
+
+</html>
